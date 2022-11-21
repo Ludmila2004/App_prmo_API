@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 // name, id, email, enrolmentCode, isAdmin, isMonitor, password
 const Usuario = new Schema ({
-    nome: {
+    name: {
         type: String,
         required: true
     },
