@@ -50,6 +50,24 @@ app.get("/usuarios/:nome", (req, res)=>{
   })
 })
 
+app.post("/usuarios/editar", (req, res) => {
+  Usuario.findOne({ _id: req.body.id }).lean().then((usuario)=>{
+    usuario.name = req.body.name
+    usuario.email = req.body.email
+    usuario.enrolmentCode = req.body.enrolmentCode
+    usuario.isAdmin = req.body.isAdmin
+    usuario.isMonitor = req.body.isMonitor
+    usuario.password = req.body.password
+    usuario.save().then(()=> {
+      console.log('user atualizado')
+    }).catch(()=>{
+      console.log('erro ao editar !');
+    })
+  }).catch(()=>{
+    console.log('erro na edicao');
+  })
+})
+
 
 app.listen(8080, ()=>{
     console.log('servidor rodando :3 ');
