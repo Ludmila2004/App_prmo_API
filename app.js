@@ -1,6 +1,9 @@
 const express = require("express")
 const app = express()
 const mongoose = require("mongoose")
+require("./models/Usuario")
+const Usuario = mongoose.model("usuarios")
+
 /* configuração para converter o body da requisição para json (body-parser descontinuado) */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,6 +22,27 @@ mongoose
       "Houve um erro na conexão com o banco de dados MongoDB! " + err
     );
   });
+
+/*
+app.get("/criarusuarios_teste", (req, res)=>{
+    const usuario = new Usuario({
+        nome: 'jorge',
+        email: 'jorge@gmail.com',
+        enrolmentCode: '0123456789',
+        isAdmin: true,
+        isMonitor: true,
+        password: '12345678'
+    })
+    usuario.save().then(()=>{
+        console.log('usuario salvo :3');
+    })
+})
+*/
+app.get("/usuarios", (req, res)=>{
+    Usuario.find().lean().then((usuarios)=>{
+        return res.json(usuarios)
+    })
+})
 
 app.listen(8080, ()=>{
     console.log('servidor rodando :3 ');
