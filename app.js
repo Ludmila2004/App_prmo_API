@@ -23,26 +23,33 @@ mongoose
     );
   });
 
-/*
-app.get("/criarusuarios_teste", (req, res)=>{
-    const usuario = new Usuario({
-        nome: 'jorge',
-        email: 'jorge@gmail.com',
-        enrolmentCode: '0123456789',
-        isAdmin: true,
-        isMonitor: true,
-        password: '12345678'
-    })
-    usuario.save().then(()=>{
-        console.log('usuario salvo :3');
-    })
+app.post("/criar", (req, res)=>{
+  const usuario = new Usuario({
+      name: req.body.name,
+      email: req.body.email,
+      enrolmentCode: req.body.enrolmentCode,
+      isAdmin: req.body.isAdmin,
+      isMonitor: req.body.isMonitor,
+      password: req.body.password
+  })
+  usuario.save().then(()=>{
+      console.log('usuario salvo :3');
+  })
 })
-*/
+
 app.get("/usuarios", (req, res)=>{
     Usuario.find().lean().then((usuarios)=>{
         return res.json(usuarios)
     })
 })
+
+app.get("/usuarios/:nome", (req, res)=>{
+  Usuario.findOne({ name: req.params.nome }).lean().then((usuario)=>{
+    console.log(usuario);
+    return res.json(usuario)
+  })
+})
+
 
 app.listen(8080, ()=>{
     console.log('servidor rodando :3 ');
