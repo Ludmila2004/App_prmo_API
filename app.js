@@ -78,6 +78,18 @@ app.patch("/usuarios/editar", (req, res) => {
     });
 });
 
+app.post("/usuarios/delete", (req, res) => {
+  Usuario.deleteOne({ _id: req.body.id })
+    .lean()
+    .then(() => {
+      console.log("user removido");
+      res.status(200).json({ message: "deleted user" });
+    })
+    .catch((err) => {
+      console.log("erro: " + err);
+    });
+});
+
 app.listen(8080, () => {
   console.log("servidor rodando :3 ");
 });
