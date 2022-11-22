@@ -23,7 +23,7 @@ mongoose
     );
   });
 
-app.post("/criar", (req, res) => {
+app.post("/usuarios/criar", (req, res) => {
   const usuario = new Usuario({
     name: req.body.name,
     email: req.body.email,
