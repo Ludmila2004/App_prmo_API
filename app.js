@@ -3,13 +3,14 @@ const app = express();
 const mongoose = require("mongoose");
 require("./models/Usuario");
 const Usuario = mongoose.model("usuarios");
+const usuario = require("./routes/Usuario.js")
 
 /* configuração para converter o body da requisição para json (body-parser descontinuado) */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 /* Configuração de MongoDB e Mongoose */
-const mongoLink = "teste123"
+const mongoLink = "mongodb+srv://nossouser:nossasenha123@cluster0.muxyzuo.mongodb.net/guloseimas-da-val-database?retryWrites=true&w=majority"
 mongoose.Promise = global.Promise;
 mongoose
   .connect(mongoLink)
@@ -23,72 +24,8 @@ mongoose
     );
   });
 
-app.post("/usuarios/criar", (req, res) => {
-  const usuario = new Usuario({
-    name: req.body.name,
-    email: req.body.email,
-    enrolmentCode: req.body.enrolmentCode,
-    isAdmin: req.body.isAdmin,
-    isMonitor: req.body.isMonitor,
-    password: req.body.password,
-  });
-  usuario.save().then(() => {
-    console.log("usuario salvo :3");
-  });
-});
 
-app.get("/usuarios", (req, res) => {
-  Usuario.find()
-    .lean()
-    .then((usuarios) => {
-      return res.json(usuarios);
-    });
-});
-
-app.get("/usuarios/:nome", (req, res) => {
-  Usuario.findOne({ name: req.params.nome })
-    .lean()
-    .then((usuario) => {
-      console.log(usuario);
-      return res.json(usuario);
-    });
-});
-
-app.patch("/usuarios/editar", (req, res) => {
-  Usuario.findOne({ _id: req.body.id })
-    .then((usuario) => {
-      usuario.name = req.body.name;
-      usuario.email = req.body.email;
-      usuario.enrolmentCode = req.body.enrolmentCode;
-      usuario.isAdmin = req.body.isAdmin;
-      usuario.isMonitor = req.body.isMonitor;
-      usuario.password = req.body.password;
-      usuario
-        .save()
-        .then(() => {
-          console.log("user atualizado");
-        })
-        .catch((err) => {
-          console.log("erro ao editar !");
-        });
-    })
-    .catch((err) => {
-      console.log("erro na edicao");
-      console.log(err);
-    });
-});
-
-app.post("/usuarios/delete", (req, res) => {
-  Usuario.deleteOne({ _id: req.body.id })
-    .lean()
-    .then(() => {
-      console.log("user removido");
-      res.status(200).json({ message: "deleted user" });
-    })
-    .catch((err) => {
-      console.log("erro: " + err);
-    });
-});
+app.use("/usuarios", usuario)
 
 app.listen(8080, () => {
   console.log("servidor rodando :3 ");
