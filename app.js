@@ -4,8 +4,15 @@ const mongoose = require("mongoose");
 require("./models/Usuario");
 const Usuario = mongoose.model("usuarios");
 const usuario = require("./routes/Usuario.js")
+const cors = require('cors');
 
 /* configuração para converter o body da requisição para json (body-parser descontinuado) */
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  app.use(cors());
+  next();
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
