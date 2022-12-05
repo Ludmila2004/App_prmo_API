@@ -50,7 +50,7 @@ const userFindByEnrolmentCode = async (req, res) => {
 
 const userEdit = async (req, res) => {
   try {
-    const user = await Usuario.findOne({ _id: req.body.id });
+    const user = await Usuario.findOne({ _id: req.params.id });
     user.name = req.body.name;
     user.email = req.body.email;
     user.enrolmentCode = req.body.enrolmentCode;
@@ -72,7 +72,7 @@ const userEdit = async (req, res) => {
 
 const userDelete = async (req, res) => {
   try {
-    await Usuario.deleteOne({ _id: req.body.id }).lean();
+    await Usuario.deleteOne({ _id: req.params.id }).lean();
     return res.status(200).json({ message: "Deleted user." });
   } catch (error) {
     return res.status(404).json({ message: "Could not delete user: " + error });
