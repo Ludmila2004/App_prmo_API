@@ -38,7 +38,10 @@ const userFindById = (req, res) => {
     .lean()
     .then((usuario) => {
       console.log(usuario);
-      return res.json(usuario);
+      return res.status(200).json(usuario);
+    })
+    .catch((error) => {
+      return res.status(404).json({ message: "User not found: " + error });
     });
 };
 
@@ -47,7 +50,10 @@ const userFindByEnrolmentCode = (req, res) => {
     .lean()
     .then((usuario) => {
       console.log(usuario);
-      return res.json(usuario);
+      return res.status(200).json(usuario);
+    })
+    .catch((error) => {
+      return res.status(404).json({ message: "User not found: " + error });
     });
 };
 
@@ -63,15 +69,16 @@ const userEdit = (req, res) => {
       usuario
         .save()
         .then(() => {
-          console.log("user atualizado");
+          return res.status(200).json({ message: "User edited." });
         })
         .catch((err) => {
-          console.log("erro ao editar !");
+          return res.status(500).json({ message: "User could not be edited." });
         });
     })
-    .catch((err) => {
-      console.log("erro na edicao");
-      console.log(err);
+    .catch((error) => {
+      return res
+        .status(404)
+        .json({ message: "User not found to edit: " + error });
     });
 };
 
@@ -79,7 +86,6 @@ const userDelete = (req, res) => {
   Usuario.deleteOne({ _id: req.body.id })
     .lean()
     .then(() => {
-      console.log("user removido");
       res.status(200).json({ message: "deleted user" });
     })
     .catch((err) => {
