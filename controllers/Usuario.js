@@ -18,7 +18,7 @@ const userCreate = (req, res) => {
       return res.status(200).json({ message: "User saved." });
     })
     .catch((error) => {
-      return res.status(404).json({ message: "User not found: " + error });
+      return res.status(500).json({ message: "User not created: " + error });
     });
 };
 
