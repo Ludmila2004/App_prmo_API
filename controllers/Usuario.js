@@ -11,9 +11,15 @@ const userCreate = (req, res) => {
     isMonitor: req.body.isMonitor,
     password: req.body.password,
   });
-  usuario.save().then(() => {
-    console.log("usuario salvo :3");
-  });
+  usuario
+    .save()
+    .then(() => {
+      console.log("usuario salvo :3");
+      return res.status(200).json({ message: "User saved." });
+    })
+    .catch((error) => {
+      return res.status(404).json({ message: "User not found: " + error });
+    });
 };
 
 const userFindAll = (req, res) => {
