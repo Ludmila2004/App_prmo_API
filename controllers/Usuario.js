@@ -37,17 +37,6 @@ const userFindById = async (req, res) => {
   }
 };
 
-const userFindByEnrolmentCode = async (req, res) => {
-  try {
-    const user = await Usuario.findOne({
-      enrolmentCode: req.params.enrolmentCode,
-    }).lean();
-    return res.status(200).json(user);
-  } catch (error) {
-    return res.status(404).json({ message: "User not found: " + error });
-  }
-};
-
 const userEdit = async (req, res) => {
   try {
     const user = await Usuario.findOne({ _id: req.params.id });
@@ -61,7 +50,9 @@ const userEdit = async (req, res) => {
       await user.save();
       return res.status(200).json({ message: "User edited." });
     } catch (error) {
-      return res.status(500).json({ message: "User could not be edited." });
+      return res
+        .status(500)
+        .json({ message: "User could not be edited: " + error });
     }
   } catch (error) {
     return res
@@ -84,6 +75,5 @@ module.exports = {
   userDelete,
   userEdit,
   userFindAll,
-  userFindByEnrolmentCode,
   userFindById,
 };
