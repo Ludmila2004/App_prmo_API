@@ -5,14 +5,16 @@ const {
   userDelete,
   userEdit,
   userFindAll,
-  userFindByEnrolmentCode,
   userFindById,
 } = require("../controllers/Usuario");
+const {
+  userFindByEnrolmentCode,
+} = require("../controllers/UsuarioEnrolmentCode");
 
-app.post("/create", userCreate);
-app.get("/findAll", userFindAll);
-app.get("/findById/:id", userFindById);
-app.get("/findByEnrolmentCode/:enrolmentCode", userFindByEnrolmentCode);
+app.post("/", userCreate);
+app.get("/", userFindAll);
+app.get("/:id", userFindById);
+app.get("/enrolment-code/:enrolmentCode", userFindByEnrolmentCode);
 app.patch("/edit", userEdit);
 app.post("/delete", userDelete);
 
