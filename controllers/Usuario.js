@@ -26,7 +26,10 @@ const userFindAll = (req, res) => {
   Usuario.find()
     .lean()
     .then((usuarios) => {
-      return res.json(usuarios);
+      return res.status(200).json(usuarios);
+    })
+    .catch((error) => {
+      return res.status(404).json({ message: "Users not found: " + error });
     });
 };
 
