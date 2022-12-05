@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 require("../models/Usuario");
 const Usuario = mongoose.model("usuarios");
 
-export const userCreate = (req, res) => {
+const userCreate = (req, res) => {
   const usuario = new Usuario({
     name: req.body.name,
     email: req.body.email,
@@ -16,7 +16,7 @@ export const userCreate = (req, res) => {
   });
 };
 
-export const userFindAll = (req, res) => {
+const userFindAll = (req, res) => {
   Usuario.find()
     .lean()
     .then((usuarios) => {
@@ -24,7 +24,7 @@ export const userFindAll = (req, res) => {
     });
 };
 
-export const userFindById = (req, res) => {
+const userFindById = (req, res) => {
   Usuario.findOne({ _id: req.params.id })
     .lean()
     .then((usuario) => {
@@ -33,7 +33,7 @@ export const userFindById = (req, res) => {
     });
 };
 
-export const userFindByEnrolmentCode = (req, res) => {
+const userFindByEnrolmentCode = (req, res) => {
   Usuario.findOne({ enrolmentCode: req.params.enrolmentCode })
     .lean()
     .then((usuario) => {
@@ -42,7 +42,7 @@ export const userFindByEnrolmentCode = (req, res) => {
     });
 };
 
-export const userEdit = (req, res) => {
+const userEdit = (req, res) => {
   Usuario.findOne({ _id: req.body.id })
     .then((usuario) => {
       usuario.name = req.body.name;
@@ -66,7 +66,7 @@ export const userEdit = (req, res) => {
     });
 };
 
-export const userDelete = (req, res) => {
+const userDelete = (req, res) => {
   Usuario.deleteOne({ _id: req.body.id })
     .lean()
     .then(() => {
@@ -78,4 +78,11 @@ export const userDelete = (req, res) => {
     });
 };
 
-module.exports = app;
+module.exports = {
+  userCreate,
+  userDelete,
+  userEdit,
+  userFindAll,
+  userFindByEnrolmentCode,
+  userFindById,
+};
