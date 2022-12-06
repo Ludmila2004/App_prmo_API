@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
-require("../models/Usuario");
-const Usuario = mongoose.model("usuarios");
+require("../models/User");
+const User = mongoose.model("users");
 
 const userFindByEnrolmentCode = async (req, res) => {
   try {
-    const user = await Usuario.findOne({
+    const user = await User.findOne({
       enrolmentCode: req.params.enrolmentCode,
     }).lean();
     return res.status(200).json(user);
