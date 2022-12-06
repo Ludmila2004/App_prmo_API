@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
-require("../models/Usuario");
-const Usuario = mongoose.model("usuarios");
+require("../models/User");
+const User = mongoose.model("users");
 
 const userCreate = async (req, res) => {
-  const usuario = new Usuario({
+  const user = new User({
     name: req.body.name,
     email: req.body.email,
     enrolmentCode: req.body.enrolmentCode,
@@ -12,7 +12,7 @@ const userCreate = async (req, res) => {
     password: req.body.password,
   });
   try {
-    await usuario.save();
+    await user.save();
     return res.status(200).json({ message: "User saved." });
   } catch (error) {
     return res.status(500).json({ message: "User not created: " + error });
@@ -21,7 +21,7 @@ const userCreate = async (req, res) => {
 
 const userFindAll = async (req, res) => {
   try {
-    const users = await Usuario.find().lean();
+    const users = await User.find().lean();
     return res.status(200).json(users);
   } catch (error) {
     return res.status(404).json({ message: "Users not found: " + error });
@@ -30,7 +30,7 @@ const userFindAll = async (req, res) => {
 
 const userFindById = async (req, res) => {
   try {
-    const user = await Usuario.findOne({ _id: req.params.id }).lean();
+    const user = await User.findOne({ _id: req.params.id }).lean();
     return res.status(200).json(user);
   } catch (error) {
     return res.status(404).json({ message: "User not found: " + error });
@@ -39,7 +39,7 @@ const userFindById = async (req, res) => {
 
 const userEdit = async (req, res) => {
   try {
-    const user = await Usuario.findOne({ _id: req.params.id });
+    const user = await User.findOne({ _id: req.params.id });
     user.name = req.body.name;
     user.email = req.body.email;
     user.enrolmentCode = req.body.enrolmentCode;
@@ -63,7 +63,7 @@ const userEdit = async (req, res) => {
 
 const userDelete = async (req, res) => {
   try {
-    await Usuario.deleteOne({ _id: req.params.id }).lean();
+    await User.deleteOne({ _id: req.params.id }).lean();
     return res.status(200).json({ message: "Deleted user." });
   } catch (error) {
     return res.status(404).json({ message: "Could not delete user: " + error });
