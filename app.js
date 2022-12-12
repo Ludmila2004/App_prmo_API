@@ -3,6 +3,12 @@ const app = express();
 const mongoose = require("mongoose");
 require("./models/User");
 const user = require("./routes/User.js");
+require("./models/Turma");
+const turma = require("./routes/Turma.js");
+require("./models/Atendimento");
+const atendimento = require("./routes/Atendimento.js");
+require("./models/Post");
+const post = require("./routes/Post.js");
 const cors = require("cors");
 require("dotenv").config();
 
@@ -28,6 +34,9 @@ mongoose
   });
 
 app.use("/users", user);
+app.use("/turmas", turma);
+app.use("/atendimentos", atendimento);
+app.use("/posts", post);
 
 const PORT = 8080;
 
