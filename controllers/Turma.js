@@ -26,7 +26,17 @@ const turmaFindAll = async (req, res) => {
 };
 
 
+const turmaDelete = async (req, res) => {
+  try {
+    await Turma.deleteOne({ _id: req.params.id }).lean();
+    return res.status(200).json({ message: "Deleted turma." });
+  } catch (error) {
+    return res.status(404).json({ message: "Could not delete turma: " + error });
+  }
+};
+
 module.exports = {
     turmaCreate,
     turmaFindAll,
-};
+    turmaDelete,
+}; 
