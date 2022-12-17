@@ -4,7 +4,7 @@ const User = mongoose.model("users");
 
 const authenticate = async (req, res) => {
     try {
-        const user = await User.findOne({ _id: req.body.id }).lean();
+        const user = await User.findOne({ email: req.body.email, password: req.body.password }).lean();
         let result = false;
         
         result = user ? true : false;
