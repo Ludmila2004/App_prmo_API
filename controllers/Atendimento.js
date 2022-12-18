@@ -27,8 +27,18 @@ const atendimentoFindAll = async (req, res) => {
     }
 };
 
+const atendimentoDelete = async (req, res) => {
+  try {
+    await Atendimento.deleteOne({ _id: req.params.id }).lean();
+    return res.status(200).json({ message: "Deleted atendimento." });
+  } catch (error) {
+    return res.status(404).json({ message: "Could not delete atendimento: " + error });
+  }
+};
+
 
 module.exports = {
     atendimentoCreate,
     atendimentoFindAll,
+    atendimentoDelete,
 };
