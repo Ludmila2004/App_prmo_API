@@ -21,7 +21,7 @@ const userCreate = async (req, res) => {
 
 const userFindAll = async (req, res) => {
   try {
-    const users = await User.find().lean();
+    const users = await User.find().select('-password').lean();
     return res.status(200).json(users);
   } catch (error) {
     return res.status(404).json({ message: "Users not found: " + error });
@@ -30,7 +30,7 @@ const userFindAll = async (req, res) => {
 
 const userFindById = async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.params.id }).lean();
+    const user = await User.findOne({ _id: req.params.id }, '-password').lean();
     return res.status(200).json(user);
   } catch (error) {
     return res.status(404).json({ message: "User not found: " + error });
