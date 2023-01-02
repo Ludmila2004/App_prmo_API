@@ -13,6 +13,20 @@ const userFindByEnrolmentCode = async (req, res) => {
   }
 };
 
+const userFindByEmail = async (req, res) => {
+  try {
+    const user = await User.findOne({
+      email: req.params.email,
+    }).lean();
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(404).json({ message: "User not found: " + error });
+  }
+};
+
+
+
 module.exports = {
   userFindByEnrolmentCode,
+  userFindByEmail
 };
