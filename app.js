@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 /* MongoDB & Mongoose */
-const mongoLink = process.env.MONGO_URL;
+const mongoLink = "mongodb+srv://nossouser:nossasenha@cluster0.kulwscm.mongodb.net/?retryWrites=true&w=majority";
 mongoose.Promise = global.Promise;
 mongoose
   .connect(mongoLink)
